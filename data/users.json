@@ -1,0 +1,15 @@
+[
+  {
+    "id": "bdeead96-ba99-459a-9b83-8db743903fc9",
+    "email": "user@demo.com",
+    "password": "dcb694aa0322f143ed970e275c807bf123bd5db4f73140b94ccc757f42dc8043",
+    "name": "Demo User",
+    "role": "user",
+    "status": "active",
+    "theme": "dark",
+    "avatar": "bdeead96-ba99-459a-9b83-8db743903fc9-1790534205.jpg",
+    "twofa_enabled": false,
+    "twofa_secret": null,
+    "created": "2026-09-27T08:00:09.522168Z"
+  }
+]

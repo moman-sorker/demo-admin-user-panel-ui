@@ -1,0 +1,40 @@
+[
+  {
+    "id": "3a7bcf28-6981-4fc5-b157-305b4cc9e916",
+    "user_email": "user@demo.com",
+    "user_name": "Demo User",
+    "subject": "Test",
+    "priority": "low",
+    "status": "closed",
+    "created": "2026-09-27T14:15:57.422020Z",
+    "updated": "2026-09-27T14:17:09.759660Z",
+    "messages": [
+      {
+        "id": "b122a176-9af0-4a41-9532-6c7637a456a7",
+        "from_name": "Demo User",
+        "from_role": "user",
+        "body": "Test",
+        "attachments": [],
+        "at": "2026-09-27T14:15:57.422048Z"
+      }
+    ]
+  },
+  {
+    "id": "c0e099ce-7627-46fe-a8d0-68150709687a",
+    "user": "user@demo.com",
+    "subject": "Test",
+    "priority": "high",
+    "status": "open",
+    "created": "2026-09-27T08:55:24.700199Z",
+    "updated": "2026-09-27T09:22:15.935463Z",
+    "messages": [
+      {
+        "id": "cba8a8f9-4db2-4d37-9b25-2afaec5c140f",
+        "from": "user@demo.com",
+        "role": "user",
+        "body": "Test",
+        "at": "2026-09-27T08:55:24.700214Z"
+      }
+    ]
+  }
+]

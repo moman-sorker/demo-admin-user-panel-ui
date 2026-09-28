@@ -1,0 +1,59 @@
+{
+  "free": {
+    "id": "free",
+    "name": "Free",
+    "price": 0.0,
+    "currency": "USD",
+    "duration_days": 7,
+    "color": "#7d8590",
+    "icon": "🆓",
+    "built_in": true,
+    "features": [
+      "2 API calls / month",
+      "Community support",
+      "Basic API tools"
+    ],
+    "ws_enabled": false,
+    "api_tester_enabled": false
+  },
+  "pro": {
+    "id": "pro",
+    "name": "Pro",
+    "price": 9.99,
+    "currency": "USD",
+    "duration_days": 30,
+    "color": "#00ff9d",
+    "icon": "⭐",
+    "built_in": true,
+    "features": [
+      "200 requests per total",
+      "Priority support",
+      "API tools access"
+    ],
+    "ws_enabled": true,
+    "api_tester_enabled": true,
+    "request_limit_per_url": 200,
+    "request_period": null,
+    "auto_renew": false,
+    "show_features_input": false
+  },
+  "premium": {
+    "id": "premium",
+    "name": "Premium",
+    "price": 29.99,
+    "currency": "USD",
+    "duration_days": 30,
+    "color": "#ffd60a",
+    "icon": "👑",
+    "built_in": true,
+    "features": [
+      "Unlimited API calls",
+      "24/7 support",
+      "WebSocket tester",
+      "All features unlocked",
+      "Custom templates"
+    ],
+    "ws_enabled": true,
+    "api_tester_enabled": true
+  }
+}

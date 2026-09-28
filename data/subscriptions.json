@@ -1,0 +1,13 @@
+{
+  "user@demo.com": {
+    "email": "user@demo.com",
+    "plan_id": "free",
+    "started_at": "2026-09-27T08:00:09.555046Z",
+    "expires_at": "2126-09-03T08:00:09.555046Z",
+    "status": "active",
+    "auto_renew": true,
+    "plans": [
+      "free"
+    ]
+  }
+}

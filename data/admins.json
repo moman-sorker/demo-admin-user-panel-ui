@@ -1,0 +1,15 @@
+[
+  {
+    "id": "448c0a3d-bb1b-4216-832a-f23b72f158c3",
+    "email": "adminsarker@gmail.com",
+    "password": "7676aaafb027c825bd9abab78b234070e702752f625b752e55e55b48e607e358",
+    "name": "Root Superadmin",
+    "role": "superadmin",
+    "status": "active",
+    "theme": "dark",
+    "avatar": "448c0a3d-bb1b-4216-832a-f23b72f158c3-1790533620.jpg",
+    "twofa_enabled": false,
+    "twofa_secret": "3VLPVCDLWXR2L3ZL4ZH3UWDQNNLWGE76",
+    "created": "2026-09-27T08:00:09.521227Z"
+  }
+]

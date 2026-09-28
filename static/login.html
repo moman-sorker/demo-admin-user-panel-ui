@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In — Panel Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<canvas id="matrix-canvas"></canvas>
+<div class="scanlines"></div>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <h1>PANEL<span>DEMO</span></h1>
+      <p>Reusable Admin · User Template</p>
+    </div>
+
+    <!-- Step 1: Login -->
+    <div id="step1">
+      <h2 class="login-title">Welcome back</h2>
+      <p class="login-sub">Sign in to access your dashboard</p>
+      <form id="loginForm" autocomplete="off">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <span class="btn-label">Sign In</span>
+          <span class="spinner" hidden></span>
+        </button>
+      </form>
+      <div class="login-hint">
+        <div><b>Admin:</b> adminsarker@gmail.com / admin@123</div>
+        <div><b>User :</b> user@demo.com / user@123</div>
+      </div>
+      <div style="text-align:center;margin-top:18px">
+        <a href="/" style="color:var(--muted);font-size:12px;text-decoration:none;font-family:var(--font-mono);letter-spacing:.5px">
+          ← Back to home
+        </a>
+      </div>
+    </div>
+
+    <!-- Step 2: 2FA -->
+    <div id="step2" style="display:none">
+      <h2 class="login-title">Two-Factor Auth</h2>
+      <p class="login-sub">Enter the 6-digit code from your authenticator app</p>
+      <form id="twofaForm" autocomplete="off">
+        <div class="field">
+          <label for="code">Verification Code</label>
+          <input type="text" id="code" inputmode="numeric" maxlength="6" pattern="\d{6}"
+                 required class="twofa-code-input" placeholder="______" />
+        </div>
+        <button type="submit" class="btn btn-primary" id="twofaBtn">
+          <span class="btn-label">Verify &amp; Sign In</span>
+          <span class="spinner" hidden></span>
+        </button>
+        <button type="button" class="btn btn-ghost" id="backBtn" style="width:100%;justify-content:center;margin-top:6px">Back</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script src="/static/app.js"></script>
+<script>
+  const step1 = $('#step1'), step2 = $('#step2');
+
+  function showStep(n) {
+    step1.style.display = n === 1 ? 'block' : 'none';
+    step2.style.display = n === 2 ? 'block' : 'none';
+  }
+
+  $('#loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = $('#email').value.trim();
+    const password = $('#password').value;
+    const btn = $('#loginBtn'); const label = $('.btn-label', btn); const sp = $('.spinner', btn);
+    btn.disabled = true; label.textContent = 'Signing in...'; sp.hidden = false;
+
+    try {
+      const data = await api('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+      if (data.need2fa) {
+        toast('2FA required. Enter your code.', 'warn');
+        showStep(2);
+        $('#code').focus();
+        btn.disabled = false; label.textContent = 'Sign In'; sp.hidden = true;
+        return;
+      }
+      toast('Welcome, ' + (data.name || email));
+      setTimeout(() => location.href = data.role === 'admin' ? '/admin' : '/user', 500);
+    } catch (err) {
+      toast(err.message || 'Login failed', 'error');
+      btn.disabled = false; label.textContent = 'Sign In'; sp.hidden = true;
+    }
+  });
+
+  $('#twofaForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const code = $('#code').value.trim();
+    const btn = $('#twofaBtn'); const label = $('.btn-label', btn); const sp = $('.spinner', btn);
+    btn.disabled = true; label.textContent = 'Verifying...'; sp.hidden = false;
+    try {
+      const data = await api('/api/login/2fa', { method: 'POST', body: JSON.stringify({ code }) });
+      toast('Welcome, ' + (data.name || 'user'));
+      setTimeout(() => location.href = data.role === 'admin' ? '/admin' : '/user', 500);
+    } catch (err) {
+      toast(err.message || 'Verification failed', 'error');
+      btn.disabled = false; label.textContent = 'Verify & Sign In'; sp.hidden = true;
+    }
+  });
+
+  $('#backBtn').addEventListener('click', () => showStep(1));
+</script>
+</body>
+</html>

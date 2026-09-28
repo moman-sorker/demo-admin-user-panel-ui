@@ -1,0 +1,60 @@
+{
+  "viewer": {
+    "name": "viewer",
+    "label": "Viewer",
+    "color": "#00d4ff",
+    "built_in": true,
+    "permissions": [
+      "dashboard.view",
+      "users.view",
+      "admins.view",
+      "tickets.view",
+      "activity.view_own"
+    ]
+  },
+  "editor": {
+    "name": "editor",
+    "label": "Editor",
+    "color": "#00ff9d",
+    "built_in": true,
+    "permissions": [
+      "dashboard.view",
+      "users.view",
+      "users.create",
+      "users.edit",
+      "admins.view",
+      "tickets.view",
+      "tickets.reply",
+      "tickets.manage",
+      "activity.view_own",
+      "api_tester.use",
+      "api_tester.save"
+    ]
+  },
+  "superadmin": {
+    "name": "superadmin",
+    "label": "Superadmin",
+    "color": "#ffd60a",
+    "built_in": true,
+    "permissions": [
+      "dashboard.view",
+      "users.view",
+      "users.create",
+      "users.edit",
+      "users.delete",
+      "admins.view",
+      "admins.manage",
+      "tickets.view",
+      "tickets.reply",
+      "tickets.manage",
+      "broadcast.send",
+      "activity.view_own",
+      "activity.view_all",
+      "api_tester.use",
+      "api_tester.save",
+      "api_share.manage",
+      "roles.manage",
+      "subscriptions.manage"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "0686054c-672e-4e75-87b1-76b94b592390",
+    "name": "Test JWT",
+    "description": "Test",
+    "method": "GET",
+    "url": "http://jwt.thug4ff.xyz/token?uid={uid}&password={password}",
+    "params": [
+      {
+        "name": "uid",
+        "label": "Uid",
+        "type": "text",
+        "default": "",
+        "required": false
+      },
+      {
+        "name": "password",
+        "label": "Password",
+        "type": "text",
+        "default": "",
+        "required": false
+      }
+    ],
+    "secret_params": {},
+    "headers": {},
+    "body": "",
+    "enabled": true,
+    "show_url": false,
+    "allowed_users": [
+      "*"
+    ],
+    "allowed_plans": [],
+    "credit_limit": null,
+    "credit_period": "day",
+    "request_limit_per_plan": {},
+    "expires_at": null,
+    "created_by": "adminsarker@gmail.com",
+    "created": "2026-09-27T16:31:38.505325Z"
+  }
+]

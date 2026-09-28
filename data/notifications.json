@@ -1,0 +1,34 @@
+[
+  {
+    "id": "3eb13897-495f-4f3e-b779-c2b70d061cae",
+    "to": "adminsarker@gmail.com",
+    "from": "system",
+    "title": "New ticket: Test",
+    "body": "Demo User opened a ticket.",
+    "kind": "ticket",
+    "redirect_view": "tickets",
+    "redirect_id": "3a7bcf28-6981-4fc5-b157-305b4cc9e916",
+    "read": true,
+    "at": "2026-09-27T14:15:57.426098Z"
+  },
+  {
+    "id": "d0c04462-78cd-40f5-85e1-af61dd4fda1d",
+    "to": "user@demo.com",
+    "from": "adminsarker@gmail.com",
+    "title": "Test",
+    "body": "Test",
+    "kind": "warning",
+    "read": false,
+    "at": "2026-09-27T09:32:42.396703Z"
+  },
+  {
+    "id": "b3491cac-fdda-4af1-8ea5-86835904bacc",
+    "to": "adminsarker@gmail.com",
+    "from": "user@demo.com",
+    "title": "New ticket: Test",
+    "body": "user@demo.com opened a ticket.",
+    "kind": "ticket",
+    "read": true,
+    "at": "2026-09-27T08:55:24.702050Z"
+  }
+]

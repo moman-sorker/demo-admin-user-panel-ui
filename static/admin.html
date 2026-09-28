@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — Panel Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body data-page="admin">
+<canvas id="matrix-canvas"></canvas>
+<div class="scanlines"></div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <a href="/landing" onclick="event.preventDefault();window.location.href='/landing';">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text"><h1>PANEL<span>DEMO</span></h1><p>Admin Console</p></div>
+      </a>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" data-view="users">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Users</span>
+      </a>
+      <a class="nav-item" data-view="admins">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+        <span>Admins</span>
+      </a>
+      <a class="nav-item" data-view="tickets">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>Support</span>
+      </a>
+      <a class="nav-item" data-view="notifications">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span>Broadcast</span>
+      </a>
+      <a class="nav-item" data-view="activity">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Activity</span>
+      </a>
+      <a class="nav-item" data-view="roles">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+        <span>Roles</span>
+      </a>
+      <a class="nav-item" data-view="postman">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span>API Tester</span>
+      </a>
+      <a class="nav-item" data-view="shared">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span>Shared APIs</span>
+      </a>
+      <a class="nav-item" data-view="subscriptions">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="6" cy="15" r="1.5"/></svg>
+        <span>Subscriptions</span>
+      </a>
+      <a class="nav-item" data-view="settings">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="who" id="whoChip">
+        <div class="who-avatar" id="who-avatar">A</div>
+        <div class="who-info">
+          <div class="name" id="who-name">...</div>
+          <div class="role-mini" id="who-role">ADMIN</div>
+        </div>
+      </div>
+      <!-- <div style="margin-bottom:10px;text-align:center" id="rolePillWrap"></div> -->
+      <button class="logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Sign Out</span>
+      </button>
+      <div class="status"><span class="status-dot"></span><span>System Online</span></div>
+      <p class="foot-note">Reusable Template · v6.0</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <h2 id="page-title">Dashboard</h2>
+        <span class="breadcrumb">~ admin / <span id="breadcrumb-current">dashboard</span></span>
+      </div>
+      <div class="header-right header-actions">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="header-divider"></div>
+        <div class="notif-wrap" id="notifWrap">
+          <button class="icon-btn" id="notifBtn" title="Notifications" style="position:relative">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+          </button>
+          <div class="notif-panel" id="notifPanel"></div>
+        </div>
+        <button class="icon-btn" id="themeToggle" title="Toggle theme">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <div class="avatar-chip" id="avatarChip" title="My profile">
+          <span id="avatarChipText">A</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section class="view active" id="view-dashboard">
+        <div class="hero">
+          <div class="hero-text">
+            <span class="tag">// ADMIN SESSION ACTIVE</span>
+            <h1>Welcome back, <span class="gradient-text" id="hero-name">Admin</span>.</h1>
+            <p>Full control — users, admins, tickets, subscriptions, payments.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-nav="users">Manage Users</button>
+              <button class="btn btn-ghost" data-nav="tickets">Support</button>
+            </div>
+          </div>
+          <div class="hero-art">
+            <div class="orb"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon cyan"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+            <div class="stat-body"><span class="stat-label">Total Users</span><span class="stat-value" id="stat-users">0</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div>
+            <div class="stat-body"><span class="stat-label">Admins</span><span class="stat-value" id="stat-admins">0</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon yellow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <div class="stat-body"><span class="stat-label">Open Tickets</span><span class="stat-value" id="stat-tickets">0</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon pink"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+            <div class="stat-body"><span class="stat-label">Paid Orders</span><span class="stat-value" id="stat-payments">0</span></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Recent Activity</h3>
+              <div class="sort-wrap">
+                <span>Sort</span>
+                <select id="dashActSort">
+                  <option value="at|desc">Newest</option>
+                  <option value="at|asc">Oldest</option>
+                </select>
+              </div>
+            </div>
+            <div class="activity-list" id="activity-list"><div class="empty">Loading...</div></div>
+            <div class="pager" id="dashActPager"></div>
+          </div>
+          <div class="panel terminal">
+            <div class="panel-head"><h3>Console Log</h3><span class="panel-tag">SYSTEM</span></div>
+            <div class="log" id="logConsole"><div class="log-line"><span class="ts">[boot]</span> <span class="ok">Admin ready.</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- USERS -->
+      <section class="view" id="view-users">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>User Management</h3>
+            <button class="btn btn-primary" id="addUserBtn">+ Add User</button>
+          </div>
+          <div class="toolbar">
+            <div class="search-bar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="userSearch" placeholder="Search name or email..." />
+            </div>
+            <select class="filter-select" id="userStatus">
+              <option value="">All status</option>
+              <option value="active">Active</option>
+              <option value="disabled">Disabled</option>
+            </select>
+            <div class="sort-wrap">
+              <span>Sort</span>
+              <select id="userSort">
+                <option value="created|desc">Newest</option>
+                <option value="created|asc">Oldest</option>
+                <option value="name|asc">Name A-Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="bulk-bar" id="bulkBar">
+            <span class="count" id="bulkCount">0 selected</span>
+            <span class="spacer"></span>
+            <button class="mini-btn" id="bulkActivate">ACTIVATE</button>
+            <button class="mini-btn" id="bulkDisable">DISABLE</button>
+            <button class="mini-btn danger" id="bulkDelete">DELETE</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:36px"><input type="checkbox" class="checkbox" id="usersSelectAll" /></th>
+                  <th>Name</th><th>Email</th><th>Status</th><th>2FA</th><th>Created</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersBody"><tr><td colspan="7" class="empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+          <div class="pager" id="usersPager"></div>
+        </div>
+      </section>
+
+      <!-- ADMINS -->
+      <section class="view" id="view-admins">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Admin Management</h3>
+            <button class="btn btn-primary" id="addAdminBtn">+ Add Admin</button>
+          </div>
+          <div class="toolbar">
+            <div class="search-bar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="adminSearch" placeholder="Search name or email..." />
+            </div>
+            <div class="sort-wrap">
+              <span>Sort</span>
+              <select id="adminSort">
+                <option value="created|desc">Newest</option>
+                <option value="created|asc">Oldest</option>
+                <option value="name|asc">Name A-Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>2FA</th><th>Created</th><th>Actions</th></tr></thead>
+              <tbody id="adminsBody"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+          <div class="pager" id="adminsPager"></div>
+        </div>
+      </section>
+
+      <!-- TICKETS -->
+      <section class="view" id="view-tickets">
+        <div class="panel">
+          <div class="panel-head"><h3>Support Tickets</h3><span class="panel-tag" id="ticketFilterTag">ALL</span></div>
+          <div class="toolbar">
+            <div class="search-bar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="ticketSearch" placeholder="Search subject or user..." />
+            </div>
+            <div class="filter-chips" id="ticketStatusChips">
+              <button class="filter-chip active" data-status="">All</button>
+              <button class="filter-chip" data-status="open">Open</button>
+              <button class="filter-chip" data-status="in_progress">In Progress</button>
+              <button class="filter-chip" data-status="closed">Closed</button>
+            </div>
+            <div class="sort-wrap">
+              <span>Sort</span>
+              <select id="ticketSort">
+                <option value="updated|desc">Recent</option>
+                <option value="created|desc">Newest</option>
+                <option value="priority|asc">Priority</option>
+              </select>
+            </div>
+          </div>
+          <div class="ticket-layout">
+            <div>
+              <div class="ticket-list" id="ticketList"><div class="empty">Loading...</div></div>
+              <div class="pager" id="ticketsPager"></div>
+            </div>
+            <div id="ticketDetail">
+              <div class="empty">Select a ticket to view conversation.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BROADCAST -->
+      <section class="view" id="view-notifications">
+        <div class="panel">
+          <div class="panel-head"><h3>Send Notification</h3><span class="panel-tag">BROADCAST</span></div>
+          <form id="notifForm" class="form">
+            <div class="form-row">
+              <div class="field">
+                <label>Recipient</label>
+                <select id="notifTo">
+                  <option value="*">All Users (broadcast)</option>
+                  <option value="custom">Specific User</option>
+                </select>
+              </div>
+              <div class="field" id="customEmailField" style="display:none">
+                <label>User Email</label>
+                <input type="email" id="notifEmail" placeholder="user@example.com" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Kind</label>
+              <select id="notifKind">
+                <option value="info">Info</option>
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+                <option value="error">Alert</option>
+                <option value="security">Security</option>
+              </select>
+            </div>
+            <div class="field"><label>Title</label><input type="text" id="notifTitle" required placeholder="e.g. Scheduled maintenance" /></div>
+            <div class="field"><label>Message</label><textarea id="notifBody" rows="4" required placeholder="Type message..."></textarea></div>
+            <div class="form-actions"><button class="btn btn-primary" type="submit">Send</button></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ACTIVITY -->
+      <section class="view" id="view-activity">
+        <div class="panel">
+          <div class="panel-head"><h3>Activity Log</h3></div>
+          <div class="toolbar">
+            <div class="search-bar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="activitySearch" placeholder="Search who or action..." />
+            </div>
+            <div class="sort-wrap">
+              <span>Sort</span>
+              <select id="activitySort">
+                <option value="at|desc">Recent</option>
+                <option value="at|asc">Oldest</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Time</th><th>Who</th><th>Action</th></tr></thead>
+              <tbody id="activityBody"><tr><td colspan="3" class="empty">Loading...</td></tr></tbody>
+            </table>
+          </div>
+          <div class="pager" id="activityPager"></div>
+        </div>
+      </section>
+
+      <!-- ROLES -->
+      <section class="view" id="view-roles">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Roles & Permissions</h3>
+            <button class="btn btn-primary" id="addRoleBtn">+ New Role</button>
+          </div>
+          <p class="muted">Built-in roles can't be deleted but permissions can be adjusted.</p>
+          <div id="rolesList"></div>
+        </div>
+      </section>
+
+      <!-- POSTMAN -->
+      <section class="view" id="view-postman">
+        <div class="panel" style="padding:14px">
+          <div class="postman">
+            <div class="postman-sidebar">
+              <div class="postman-tabs">
+                <button class="postman-tab active" data-ptab="history">History</button>
+                <button class="postman-tab" data-ptab="collections">Saved</button>
+              </div>
+              <div class="postman-list" id="postmanHistory"></div>
+              <div class="postman-list" id="postmanCollections" style="display:none"></div>
+            </div>
+            <div class="postman-main">
+              <div class="postman-bar">
+                <select class="method-select" id="pmMethod">
+                  <option>GET</option><option>POST</option><option>PUT</option>
+                  <option>PATCH</option><option>DELETE</option><option>HEAD</option>
+                </select>
+                <input type="text" class="url-input" id="pmUrl" placeholder="https://api.example.com/endpoint" />
+                <button class="btn btn-primary" id="pmSend">Send</button>
+                <button class="btn btn-ghost" id="pmSave">Save</button>
+                <button class="btn btn-ghost" id="pmClear">Clear</button>
+              </div>
+              <div class="postman-req-tabs">
+                <button class="postman-req-tab" data-ptab2="params">Params</button>
+                <button class="postman-req-tab active" data-ptab2="headers">Headers</button>
+                <button class="postman-req-tab" data-ptab2="body">Body</button>
+              </div>
+              <div class="tab-pane" id="pane-params">
+                <div id="pmParams"></div>
+                <button class="mini-btn" id="pmAddParam" style="margin-top:6px">+ ADD PARAM</button>
+                <button class="mini-btn" id="pmExtractParams" style="margin-top:6px;margin-left:6px">EXTRACT FROM URL</button>
+              </div>
+              <div class="tab-pane active" id="pane-headers">
+                <div id="pmHeaders"></div>
+                <button class="mini-btn" id="pmAddHeader" style="margin-top:6px">+ ADD HEADER</button>
+              </div>
+              <div class="tab-pane" id="pane-body">
+                <textarea class="body-editor" id="pmBody" placeholder='{ "key": "value" }'></textarea>
+              </div>
+              <div class="postman-resp" id="pmResp">
+                <div class="resp-stats" id="pmRespStats"></div>
+                <div class="resp-tabs">
+                  <button class="resp-tab active" data-rtab="body">Body</button>
+                  <button class="resp-tab" data-rtab="headers">Headers</button>
+                </div>
+                <div class="resp-body" id="pmRespBody"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHARED APIs -->
+      <section class="view" id="view-shared">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Shared APIs</h3>
+            <button class="btn btn-primary" id="addSharedBtn">+ Share API</button>
+          </div>
+          <p class="muted">Users never see the raw URL. Define params they need to fill. Use secret keys for auth.</p>
+          <div id="sharedList"></div>
+        </div>
+      </section>
+
+      <!-- SUBSCRIPTIONS -->
+      <section class="view" id="view-subscriptions">
+        <div class="tabs">
+          <button class="tab active" data-subtab="plans">Plans</button>
+          <button class="tab" data-subtab="assigned">Assigned</button>
+          <button class="tab" data-subtab="payments">Payments</button>
+        </div>
+
+        <div id="subtab-plans">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Subscription Plans</h3>
+              <button class="btn btn-primary" id="addPlanBtn">+ New Plan</button>
+            </div>
+            <div class="plans-grid" id="plansGrid"></div>
+          </div>
+        </div>
+
+        <div id="subtab-assigned" style="display:none">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Assigned Subscriptions</h3>
+              <button class="btn btn-primary" id="assignSubBtn">+ Assign Plan</button>
+            </div>
+            <div class="toolbar">
+              <div class="search-bar">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="subSearch" placeholder="Search user..." />
+              </div>
+              <select class="filter-select" id="subStatus">
+                <option value="">All status</option>
+                <option value="active">Active</option>
+                <option value="expired">Expired</option>
+              </select>
+              <select class="filter-select" id="subPlan"><option value="">All plans</option></select>
+            </div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th>User</th><th>Plan</th><th>Status</th><th>Started</th><th>Expires</th><th>Actions</th></tr></thead>
+                <tbody id="subsBody"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+              </table>
+            </div>
+            <div class="pager" id="subsPager"></div>
+          </div>
+        </div>
+
+        <div id="subtab-payments" style="display:none">
+          <div class="panel">
+            <div class="panel-head"><h3>Payment History</h3></div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th>Date</th><th>User</th><th>Plan</th><th>Amount</th><th>Status</th><th>TrxID</th></tr></thead>
+                <tbody id="paymentsBody"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="view-settings">
+        <div class="panel">
+          <div class="panel-head"><h3>My Profile</h3></div>
+          <div class="avatar-upload">
+            <div class="avatar-upload-preview" id="avatarPreview"><span id="avatarPreviewText">A</span></div>
+            <div class="avatar-upload-actions">
+              <input type="file" id="avatarFile" accept="image/*" class="file-input" />
+              <button class="btn btn-primary" id="avatarUploadBtn">📤 Upload Avatar</button>
+              <button class="btn btn-ghost" id="avatarRemoveBtn">Remove</button>
+              <span class="hint">PNG · JPG · GIF · WEBP · max 4 MB</span>
+            </div>
+          </div>
+          <div class="setting">
+            <div><div class="setting-title">Change Name</div><div class="setting-desc">Update display name.</div></div>
+            <button class="btn btn-ghost" id="changeNameBtn">Edit</button>
+          </div>
+          <div class="setting">
+            <div><div class="setting-title">Change Email</div><div class="setting-desc">Update sign-in email.</div></div>
+            <button class="btn btn-ghost" id="changeEmailBtn">Edit</button>
+          </div>
+          <div class="setting">
+            <div><div class="setting-title">Change Password</div><div class="setting-desc">Set a new password.</div></div>
+            <button class="btn btn-ghost" id="changePwBtn">Change</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>Two-Factor Authentication</h3><span class="panel-tag" id="twofaTag">OFF</span></div>
+          <div id="twofaArea"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>Appearance</h3></div>
+          <div class="setting">
+            <div><div class="setting-title">Dark / Light Theme</div><div class="setting-desc">Synced across devices.</div></div>
+            <button class="btn btn-ghost" id="themeBtn">Toggle</button>
+          </div>
+          <div class="setting">
+            <div><div class="setting-title">Matrix Rain</div><div class="setting-desc">Animated code rain.</div></div>
+            <label class="switch"><input type="checkbox" id="matrixToggle" checked><span></span></label>
+          </div>
+          <div class="setting">
+            <div><div class="setting-title">Scanlines</div><div class="setting-desc">CRT overlay.</div></div>
+            <label class="switch"><input type="checkbox" id="scanToggle" checked><span></span></label>
+          </div>
+        </div>
+
+        <div class="panel danger-zone">
+          <div class="panel-head"><h3>Danger Zone</h3></div>
+          <div class="setting">
+            <div><div class="setting-title">Reset Local Preferences</div><div class="setting-desc">Clear local theme/toggles.</div></div>
+            <button class="btn btn-danger" id="wipeBtn">Reset</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script src="/static/app.js"></script>
+<script src="/static/admin.js"></script>
+</body>
+</html>
